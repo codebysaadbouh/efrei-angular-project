@@ -1,0 +1,82 @@
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-md-12 mt-3">
+      <h1 class="display-3">Cart</h1>
+      <p class="lead">
+        The list of products added to cart
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10">
+      <div *ngIf="cartItems?.length > 0; else other_content">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Picture</th>
+            <th scope="col">Specifications</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Modify</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let cartItem of cartItems">
+            <th scope="row">{{cartItem.name}}</th>
+            <td>
+              <img src="{{cartItem.picture}}" class="img-limit" alt="...">
+            </td>
+            <td>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="fa-solid fa-palette"></i>
+                  <span class="badge bg-primary rounded-pill">{{cartItem.specifications.color}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="fa-solid fa-weight-hanging"></i>
+                  <span class="badge bg-primary rounded-pill">{{cartItem.specifications.weight}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <i class="fa-solid fa-database"></i>
+                  <span class="badge bg-primary rounded-pill">{{cartItem.specifications.storage}}</span>
+                </li>
+              </ul>
+            </td>
+            <td class="text-center">{{cartItem.quantity}}</td>
+            <td class="text-center">{{cartItem.specifications.price* cartItem.quantity}}$</td>
+            <td class="text-center">
+              <button class="btn btn-danger m-1" (click)="removeFromCart(cartItem)">
+                -
+              </button>
+              <button class="btn btn-primary m-1" (click)="addFromCart(cartItem)">
+                +
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="col-md-12">
+            <h5>Your Order : </h5>
+            <ul class="list-group" >
+              <li class="list-group-item" *ngFor="let cartItem of cartItems"> <span class="badge text-bg-dark"> {{cartItem.quantity}}</span> {{cartItem.name}} :  {{cartItem.specifications.price* cartItem.quantity}}$</li>
+            </ul>
+
+          <h5 class="mt-3">Total : {{getTotal()}}$</h5>
+        </div>
+      </div>
+      <div class="row">
+
+      </div>
+      <ng-template #other_content>
+        <div class="alert alert-info" role="alert">
+          Your cart is empty !
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+
+</div>
